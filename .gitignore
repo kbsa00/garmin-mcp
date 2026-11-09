@@ -1,0 +1,12 @@
+# secrets and local-only files
+.env
+.dev.vars
+CONNECTOR_LOGIN.txt
+.backfill.wrangler.json
+
+# build/dev artifacts
+node_modules/
+.wrangler/
+dist/
+.probe/
+.DS_Store

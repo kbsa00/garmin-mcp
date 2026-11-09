@@ -1,0 +1,31 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	// Rename the worker if you like (before running `npm run setup`): it becomes part of the URL.
+	"name": "garmin-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-11-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		// The URL MCP clients connect to; OAuth tokens are bound to it. Set by scripts/setup-instance.mjs.
+		// scripts/dev.mjs overrides it for local dev.
+		"MCP_RESOURCE": "SET_BY_SETUP"
+	},
+	"kv_namespaces": [
+		{ "binding": "OAUTH_KV", "id": "SET_BY_SETUP_OAUTH_KV" },
+		{ "binding": "APP_KV", "id": "SET_BY_SETUP_APP_KV" }
+	],
+	"d1_databases": [
+		{ "binding": "DB", "database_name": "garmin-mcp", "database_id": "SET_BY_SETUP_D1", "migrations_dir": "migrations" }
+	],
+	"triggers": {
+		// 05:30 Europe/Oslo all year: 03:30 UTC in summer (CEST) and 04:30 UTC in winter (CET).
+		// The handler runs only for the one that matches 05:xx local time (see src/index.ts).
+		"crons": ["30 3 * * *", "30 4 * * *"]
+	},
+	"secrets": {
+		"required": ["GARMIN_API_KEY", "LOGIN_PASSPHRASE_HASH"]
+	},
+	"workers_dev": true,
+	"observability": { "enabled": true },
+	"dev": { "port": 8788 }
+}
