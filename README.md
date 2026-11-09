@@ -1,4 +1,4 @@
-# garmin-mcp
+# Garmin MCP for Claude
 
 Your own Garmin Connect data in Claude. This is a personal, self-hosted **remote MCP server** on **Cloudflare Workers** (free plan) that you add to [claude.ai](https://claude.ai) as a custom connector.
 
